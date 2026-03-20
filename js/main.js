@@ -7,6 +7,8 @@ const playButton = document.querySelector('#play-all');
 const pauseButton = document.querySelector('#pause-all');
 const stopButton = document.querySelector('#stop-all');
 const resetButton = document.querySelector('#reset-all');
+//const volumeDown = document.querySelector('#volume-down');
+//const volumeDown = document.querySelector('#volume-up');
 
 let currentDraggedElement = null;
 
@@ -59,14 +61,17 @@ function restartAudio() {
     theAudioEl.restart();
 }
 
-//add function for playAll
-//select all audio elements using querySelector
-//run for each loop to play audio
+/*function stopAudio() {
+    theAudioEl.restart();
+}*/
 
+/*function volumeDown() {
+    theAudioEl.volumeDown();
+}*/
 
-//add function for stopAll
-//select all audio elements using querySelector
-//run for each loop to stop audio
+/*function volumeUp() {
+    theAudioEl.volumeUp();
+}*/
 
 //function resetMixer() {
   //  dragItems.forEach(dragItem => {
@@ -87,7 +92,7 @@ playButton.addEventListener("click", playAudio);
 pauseButton.addEventListener("click", pauseAudio);
 stopButton.addEventListener("click", restartAudio);
 
-//Add event listener for play button
-//Add event listener for stop button
+//volumeDown.addEventListener("click", volumeDown);
+//volumeDown.addEventListener("click", volumeUp);
 
 //resetButton.addEventListener('click', resetMixer);
