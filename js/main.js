@@ -2,13 +2,12 @@ console.log("JavaScript File is linked");
 
 const targetZones = document.querySelectorAll(".target-zone");
 const dragItems = document.querySelectorAll(".drag-item");
-const theAudioEl = document.querySelector('audio');
+//const audioPlayer = document.querySelector('audio');
 const playButton = document.querySelector('#play-all');
 const pauseButton = document.querySelector('#pause-all');
+const volSlider = document.querySelector('#volumeControl');
 const stopButton = document.querySelector('#stop-all');
-const resetButton = document.querySelector('#reset-all');
-//const volumeDown = document.querySelector('#volume-down');
-//const volumeDown = document.querySelector('#volume-up');
+//const resetButton = document.querySelector('#reset-all');
 
 let currentDraggedElement = null;
 
@@ -16,68 +15,81 @@ function dragStart() {
   currentDraggedElement = this;
 }
 
+console.log(currentDraggedElement);
+
 function dragOver(e) {
   e.preventDefault();
 }
 
 function drop(e) {
   e.preventDefault();
+  this.appendChild(currentDraggedElement);
 
-  currentDraggedElement.classList.add('hidden');
+  console.log(currentDraggedElement.dataset.instrument);
 
-  const characterimg = document.createElement('img');
-  characterimg.src = `images/${currentDraggedElement.dataset.instrument}.jpg`
-
-  // Add the image to the target zone
-  this.appendChild(characterimg);
-
-  //create audio element
-  //set src attribute dynamically
-  //load audio
-  //append audio
-  //loop audio
-  //play audio
+  const instrument = document.createElement("audio");
+  instrument.src = `audio/${currentDraggedElement.dataset.instrument}.mp3`;
+  instrument.load();
+  this.appendChild(instrument);
+  instrument.loop;
+  instrument.play();
   currentDraggedElement = null;
 }
 
 // load the new audio source
-function loadAudio(querySelectorAll) {
-   console.log("Load Audio Called")
-   theAudioEl.src = `audio/${this.dataset.trackref}.mp3`;
-   theAudioEl.load();   
-   //call another function
-   playAudio();
-}
+/* 
 
 function playAudio() {
-   theAudioEl.play();
+   console.log("Load Audio Called")
+   audioPlayer.src = `audio/${this.dataset.trackref}.mp3`;
+   audioPlayer.load();   
+   //call another function
+   playAudio();
+} {
+ console.log ("Audio Loaded Called");
+  const playAudio = document.querySelector('audio');
+  playAudio.src="audio/Guitar.mp3";
+  playAudio.src = `audio/${this.dataset.trackref}.mp3`;
+  playAudio.load();
+  loadAudio();
+}*/
+
+function playAudio() {
+    const audioElements = document.querySelectorAll('audio');
+    console.log(audioElements);
+    audioElements.forEach(audioElement => {
+      audioElement.play();
+    })
 }
 
 function pauseAudio() {
-    theAudioEl.pause();
+    const audioElements = document.querySelectorAll('audio');
+    console.log(audioElements);
+    audioElements.forEach(audioElement => {
+      audioElement.pause();
+    })
 }
 
 function restartAudio() {
-    theAudioEl.restart();
+  const audioElements = document.querySelectorAll('audio');
+  console.log(audioElements);
+    audioElements.forEach(audioElement => {
+      audioElement.currentTime = 0;
+   restartAudio();
+})
 }
 
-/*function stopAudio() {
-    theAudioEl.restart();
-}*/
+function setVolume() {
+  const audioElements = document.querySelectorAll('audio');
+  console.log(this.value);
+    audioElements.volume = (this.value/100);
+}
 
-/*function volumeDown() {
-    theAudioEl.volumeDown();
-}*/
-
-/*function volumeUp() {
-    theAudioEl.volumeUp();
-}*/
-
-//function resetMixer() {
-  //  dragItems.forEach(dragItem => {
-    //    dragItem.appendChild(dragItem);
-  //  });
-//}
+/*function resetMixer() {
+ dragItems.forEach(dragItem => {
+      dragItem.appendChild(dragItem);
+    });
+};*/
 
 dragItems.forEach(dragItem => {
   dragItem.addEventListener('dragstart', dragStart);
@@ -90,9 +102,7 @@ targetZones.forEach(zone => {
 
 playButton.addEventListener("click", playAudio);
 pauseButton.addEventListener("click", pauseAudio);
+volSlider.addEventListener("slide", setVolume);
 stopButton.addEventListener("click", restartAudio);
-
-//volumeDown.addEventListener("click", volumeDown);
-//volumeDown.addEventListener("click", volumeUp);
 
 //resetButton.addEventListener('click', resetMixer);
